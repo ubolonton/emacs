@@ -7,6 +7,12 @@
          (bug-reference-url-format . "https://debbugs.gnu.org/%s")))
  (c-mode . ((c-file-style . "GNU")
             (c-noise-macro-names . ("INLINE" "ATTRIBUTE_NO_SANITIZE_UNDEFINED" "UNINIT" "CALLBACK" "ALIGN_STACK"))
+            (tree-sitter-hl--extra-patterns-list
+             [((call_expression
+                function: (identifier) @keyword
+                arguments: (argument_list
+                            (string_literal) @function))
+               (.eq? @keyword "DEFUN"))])
             (electric-quote-comment . nil)
             (electric-quote-string . nil)
 	    (mode . bug-reference-prog)))
