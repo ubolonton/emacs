@@ -92,6 +92,7 @@ To add a new module function, proceed as follows:
 #include "syssignal.h"
 #include "sysstdio.h"
 #include "thread.h"
+#include "buffer.h"
 
 #include <intprops.h>
 #include <verify.h>
@@ -1552,4 +1553,15 @@ syms_of_module (void)
   DEFSYM (Qunicode_string_p, "unicode-string-p");
 
   defsubr (&Smodule_load);
+}
+
+void module_access_buffer_contents(emacs_env *env,
+                                   char **before_gap,
+                                   ptrdiff_t *before_gap_size,
+                                   char **after_gap,
+                                   ptrdiff_t *after_gap_size) {
+  *before_gap_size = GPT_BYTE - BEG_BYTE;
+  *after_gap_size = Z_BYTE - GPT_BYTE;
+  *before_gap = BYTE_POS_ADDR(BEG_BYTE);
+  *after_gap = BEG_ADDR + GPT_BYTE + GAP_SIZE - BEG_BYTE;
 }
